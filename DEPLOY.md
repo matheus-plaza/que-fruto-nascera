@@ -8,34 +8,43 @@ A configuração abaixo é feita **uma vez só** e leva uns 10 minutos.
 
 ---
 
-## Passo 1 — Criar a conta no GitHub e enviar a pasta
+## ✅ Passo 1 — GitHub (já está feito)
 
-O Cloudflare precisa ler os arquivos de algum lugar. Esse lugar é o GitHub (também grátis).
+O código já está enviado para:
 
-1. Crie uma conta em [github.com](https://github.com) (se ainda não tiver).
-2. Clique em **New repository** ([github.com/new](https://github.com/new)).
-   - **Repository name:** `que-fruto-nascera` (ou o nome que preferir)
-   - Deixe **Public**
-   - **Não** marque nenhuma das opções de "Initialize with…" (nada de README, .gitignore ou license) — a pasta já tem tudo
-   - **Create repository**
-3. O GitHub mostra uma tela com comandos. Ignore e use os daqui: abra o **Git Bash** (ou o terminal) **dentro da pasta `JOGO_AGRO`** e rode, trocando `SEU-USUARIO` pelo seu nome de usuário do GitHub:
+**https://github.com/matheus-plaza/que-fruto-nascera**
+
+Não precisa fazer nada aqui. A partir de agora, publicar alteração é o Passo 3.
+
+<details>
+<summary>Se um dia precisar refazer isso em outro computador</summary>
 
 ```bash
-git remote add origin https://github.com/SEU-USUARIO/que-fruto-nascera.git
+git clone https://github.com/matheus-plaza/que-fruto-nascera.git
+cd que-fruto-nascera
+```
+
+E se for criar um repositório novo do zero, lembre de trocar `SEU-USUARIO` pelo seu nome de usuário de verdade (foi o tropeço da primeira vez):
+
+```bash
+git remote add origin https://github.com/SEU-USUARIO/nome-do-repositorio.git
 git push -u origin main
 ```
 
-Na primeira vez ele vai pedir para você entrar na conta do GitHub — abre uma janela do navegador, é só autorizar.
+Se o `origin` já existir e você quiser trocar o endereço, use `set-url` em vez de `add`:
 
-> O `git init` e o primeiro commit **já estão feitos**. Se quiser conferir: `git log --oneline` deve mostrar um commit.
+```bash
+git remote set-url origin https://github.com/SEU-USUARIO/nome-do-repositorio.git
+```
+</details>
 
 ---
 
-## Passo 2 — Ligar o Cloudflare Pages
+## 👉 Passo 2 — Ligar o Cloudflare Pages (é o que falta)
 
 1. Crie uma conta em [dash.cloudflare.com/sign-up](https://dash.cloudflare.com/sign-up) (grátis, não pede cartão).
 2. No painel, vá em **Compute (Workers & Pages)** → **Create** → aba **Pages** → **Connect to Git**.
-3. Autorize o Cloudflare a acessar o GitHub e escolha o repositório `que-fruto-nascera`.
+3. Autorize o Cloudflare a acessar o GitHub e escolha o repositório `matheus-plaza/que-fruto-nascera`.
 4. Na tela de configuração do build, preencha assim:
 
 | Campo | Valor |
