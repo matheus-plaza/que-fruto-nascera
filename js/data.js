@@ -10,6 +10,8 @@
 window.DB = (function () {
   'use strict';
 
+  /* emoji: '' significa que o Unicode nao tem simbolo para aquela fruta.
+     Melhor ficar sem do que usar o de outra fruta (o do caju viraria amendoim). */
   var ESPECIES = [
     {
       id: 'maracuja', nome: 'Maracujá', planta: 'Maracujazeiro', emoji: '🟡', cor: '#7C3AED',
@@ -144,7 +146,7 @@ window.DB = (function () {
       decoys: ['uva', 'acai', 'cereja']
     },
     {
-      id: 'caju', nome: 'Caju', planta: 'Cajueiro', emoji: '🥜', cor: '#EA580C',
+      id: 'caju', nome: 'Caju', planta: 'Cajueiro', emoji: '', cor: '#EA580C',
       pistas: [
         { t: 'A flor', d: 'Minhas florzinhas são rosadas e perfumadas, todas juntas na ponta dos galhos.' },
         { t: 'Meu formato', d: 'Tenho uma parte grande e suculenta e uma "bolsinha" dura pendurada na ponta.' },

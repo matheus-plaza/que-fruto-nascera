@@ -57,7 +57,7 @@ document.getElementById('grade').innerHTML = DB.especies.map(function (e) {
       '<div class="seta">→</div>' +
       '<figure>' + Midia.mini(e.id, 'fruto') + '<figcaption>fruto</figcaption></figure>' +
     '</div>' +
-    '<h2>' + e.emoji + ' ' + e.nome + '</h2>' +
+    '<h2>' + (e.emoji ? e.emoji + ' ' : '') + e.nome + '</h2>' +
     '<p class="planta">' + e.planta + '</p>' +
     '<ol>' + e.pistas.map(function (p) { return '<li><b>' + p.t + '</b><br>' + p.d + '</li>'; }).join('') + '</ol>' +
     '<p class="pol">🐝 ' + e.polinizador + '</p>' +

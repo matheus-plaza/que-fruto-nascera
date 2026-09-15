@@ -277,7 +277,8 @@
     box.classList.remove('travado');
     box.innerHTML = r.opcoes.map(function (id) {
       var o = DB.por(id);
-      return '<button class="alt" data-id="' + id + '"><span class="emo">' + o.emoji + '</span>' + o.nome + '</button>';
+      var emo = o.emoji ? '<span class="emo">' + o.emoji + '</span>' : '';
+      return '<button class="alt" data-id="' + id + '">' + emo + o.nome + '</button>';
     }).join('');
 
     /* pistas */

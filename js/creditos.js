@@ -8,10 +8,10 @@ window.CREDITOS = {
   "titulo": "Starr-100417-4841-Persea americana-flowers-Olinda-Maui (24734551430).jpg"
  },
  "abacate-fruto": {
-  "autor": "Forest & Kim Starr",
-  "licenca": "CC BY 3.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Starr_071024-0140_Persea_americana.jpg",
-  "titulo": "Starr 071024-0140 Persea americana.jpg"
+  "autor": "Denis kasozi",
+  "licenca": "CC BY-SA 4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Ugandan_avocado_cut_in_halfs_4.jpg",
+  "titulo": "Ugandan avocado cut in halfs 4.jpg"
  },
  "abacaxi-flor": {
   "autor": "Forest and Kim Starr",
@@ -170,10 +170,10 @@ window.CREDITOS = {
   "titulo": "Starr-170923-0276-Malus pumila-Anna flowers-Hawea Pl Olinda-Maui - Flickr - Starr Environmental.jpg"
  },
  "maca-fruto": {
-  "autor": "Forest and Kim Starr",
+  "autor": "Abhijit Tembhekar from Mumbai, India",
   "licenca": "CC BY 2.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Starr-170923-0280-Malus_pumila-Anna_fruit-Hawea_Pl_Olinda-Maui_-_Flickr_-_Starr_Environmental.jpg",
-  "titulo": "Starr-170923-0280-Malus pumila-Anna fruit-Hawea Pl Olinda-Maui - Flickr - Starr Environmental.jpg"
+  "pagina": "https://commons.wikimedia.org/wiki/File:Red_Apple.jpg",
+  "titulo": "Red Apple.jpg"
  },
  "mamao-flor": {
   "autor": "Forest and Kim Starr",
@@ -254,10 +254,10 @@ window.CREDITOS = {
   "titulo": "Starr-090426-6402-Pyrus communis-flowers-Kula-Maui (24322087334).jpg"
  },
  "pera-fruto": {
-  "autor": "Forest and Kim Starr",
-  "licenca": "CC BY 2.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Starr-170909-0067-Pyrus_communis-Hood_fruit-Hawea_Pl_Olinda-Maui_-_Flickr_-_Starr_Environmental.jpg",
-  "titulo": "Starr-170909-0067-Pyrus communis-Hood fruit-Hawea Pl Olinda-Maui - Flickr - Starr Environmental.jpg"
+  "autor": "Rhododendrites",
+  "licenca": "CC BY-SA 4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Four_pears.jpg",
+  "titulo": "Four pears.jpg"
  },
  "pessego-flor": {
   "autor": "Forest and Kim Starr",
