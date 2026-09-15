@@ -13,3 +13,6 @@ desktop.ini
 # editor
 .vscode/
 .idea/
+
+# config local do editor/preview
+.claude/

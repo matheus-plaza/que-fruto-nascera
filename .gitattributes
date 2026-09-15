@@ -1,0 +1,10 @@
+# Normaliza quebras de linha para o projeto funcionar em qualquer sistema.
+* text=auto eol=lf
+
+# Script do Windows precisa de CRLF; o do bash quebra se vier com CRLF.
+*.bat text eol=crlf
+*.sh  text eol=lf
+
+# Binarios: o git nao deve mexer.
+*.jpg binary
+*.png binary
