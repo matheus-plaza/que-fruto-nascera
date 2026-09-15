@@ -283,14 +283,10 @@
     /* pistas */
     $('#listaPistas').innerHTML = '';
     var btnP = $('#btnPista');
-    if (r.nivel === 4) {
-      btnP.hidden = true;
-    } else {
-      btnP.hidden = false;
-      btnP.disabled = false;
-      $('#pistaCont').textContent = '3';
-      $('.pista-txt').textContent = 'Pedir uma pista';
-    }
+    btnP.hidden = false;
+    btnP.disabled = false;
+    $('#pistaCont').textContent = '3';
+    $('.pista-txt').textContent = r.nivel === 4 ? 'Pedir ajuda (revela um pedaço)' : 'Pedir uma pista';
 
     /* cronometro / revelacao */
     $('#cronometro').hidden = true;
@@ -300,13 +296,25 @@
         if (!caiFolha(1)) { clearInterval(timerRevelar); timerRevelar = null; return; }
         r.revelados++;
       }, 4000);
-      iniciarCronometro(40, function () { responder(null); });
+      iniciarCronometro(45, function () { responder(null); });
     } else if (cfg.tempo) {
       iniciarCronometro(30, function () { responder(null); });
     }
   }
 
   /* ---------------- pistas ---------------- */
+
+  /* Quanto a rodada vale neste momento.
+     Niveis 1-3: cai conforme as pistas usadas.
+     Desafio final: cai conforme os pedacos ja revelados (por tempo ou por pista). */
+  function valorAtual(r) {
+    if (r.nivel === 4) {
+      return Math.max(DB.DESAFIO.minimo,
+        DB.DESAFIO.inicial - DB.DESAFIO.passo * (r.revelados || 0));
+    }
+    return DB.PONTOS[r.nivel][r.pistas];
+  }
+
   function pedirPista() {
     var r = jogo && jogo.rodadas[jogo.indice];
     if (!r || r.respondida || r.pistas >= 3) return;
@@ -316,17 +324,30 @@
     var li = document.createElement('li');
     li.innerHTML = '<b>Pista ' + r.pistas + ' · ' + p.t + '</b>' + p.d;
     $('#listaPistas').appendChild(li);
+    /* Garante que a pista recem-aberta apareca, mesmo em tela baixa.
+       Calculo explicito em vez de scrollIntoView: 'behavior: smooth' e
+       ignorado em varios navegadores/webviews e a rolagem nao acontecia. */
+    setTimeout(function () {
+      var tela = $('#tela-jogo');
+      var falta = li.getBoundingClientRect().bottom - window.innerHeight;
+      if (falta > 0) tela.scrollTop += falta + 16;
+    }, 60);
     Sfx.pista();
     vibrar(12);
-    if (r.nivel === 3) caiFolha(2);
+    if (r.nivel === 3) {
+      caiFolha(2);
+    } else if (r.nivel === 4) {
+      /* no desafio, pedir ajuda adianta a revelacao e custa o mesmo que o tempo custaria */
+      caiFolha(1);
+      r.revelados = (r.revelados || 0) + 1;
+    }
     var restam = 3 - r.pistas;
     $('#pistaCont').textContent = restam;
     if (restam === 0) {
       $('#btnPista').disabled = true;
       $('.pista-txt').textContent = 'Sem mais pistas';
     }
-    var vale = DB.PONTOS[r.nivel][r.pistas];
-    mostrarSelo('vale ' + vale, true);
+    mostrarSelo('vale ' + valorAtual(r), true);
   }
 
   function mostrarSelo(txt, discreto) {
@@ -351,9 +372,7 @@
     var pontos = 0, bonus = 0;
 
     if (acertou) {
-      pontos = r.nivel === 4
-        ? Math.max(DB.DESAFIO.minimo, DB.DESAFIO.inicial - DB.DESAFIO.passo * (r.revelados || 0))
-        : DB.PONTOS[r.nivel][r.pistas];
+      pontos = valorAtual(r);
       jogo.sequencia++;
       if (jogo.sequencia >= 2) bonus = Math.min(DB.BONUS_MAX, DB.BONUS_SEQUENCIA * (jogo.sequencia - 1));
       jogo.acertos++;

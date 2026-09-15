@@ -107,7 +107,7 @@ Duas frutas têm tratamento especial:
 | Depois da 3ª pista | 4 | **5** | 6 |
 | Errou | 0 | 0 | 0 |
 
-No **desafio final** começa em 50 pontos e cai 8 a cada pedaço da flor revelado (mínimo 10). Acertos seguidos dão **bônus de sequência** (+5, +10, +15).
+No **desafio final** começa em 50 pontos e cai 8 a cada pedaço da flor revelado — pelo tempo ou por pedir ajuda, que também revela um pedaço (mínimo 10). Acertos seguidos dão **bônus de sequência** (+5, +10, +15).
 
 ### Títulos finais
 

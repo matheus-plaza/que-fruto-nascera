@@ -180,8 +180,11 @@ button{font-family:inherit}
 }
 
 .jogo-corpo{
-  flex:1;width:min(980px,100%);margin:0 auto;padding:0 16px 20px;
-  display:flex;flex-direction:column;gap:14px;min-height:0;
+  /* flex:1 0 auto = ocupa a sobra quando cabe (para centralizar bonito),
+     mas NUNCA encolhe abaixo do proprio conteudo. Sem isso, as pistas
+     passavam do rodape e sumiam, porque a tela nao criava rolagem. */
+  flex:1 0 auto;width:min(980px,100%);margin:0 auto;padding:0 16px 20px;
+  display:flex;flex-direction:column;gap:14px;
   justify-content:center;
 }
 
@@ -241,7 +244,7 @@ button{font-family:inherit}
 }
 
 /* ---------- painel de perguntas ---------- */
-.painel{display:flex;flex-direction:column;gap:12px;flex:0 1 auto;justify-content:center}
+.painel{display:flex;flex-direction:column;gap:12px;flex:0 0 auto;justify-content:center}
 .pergunta{
   text-align:center;font-size:clamp(1.15rem,4.6vw,1.5rem);
   color:var(--verde-escuro);line-height:1.2;
@@ -423,9 +426,9 @@ button{font-family:inherit}
 /* ---------- responsivo: tablet deitado ---------- */
 @media (min-width:840px) and (orientation:landscape){
   .jogo-corpo{flex-direction:row;align-items:center;gap:26px}
-  .palco{flex:0 0 42%}
+  .palco{flex:0 0 42%;align-self:center}
   .palco-caixa{width:min(360px,38vw)}
-  .painel{flex:1;justify-content:center}
+  .painel{flex:1 1 auto;justify-content:center}
   .alternativas{gap:12px}
   .alt{min-height:76px;font-size:1.15rem}
 }
