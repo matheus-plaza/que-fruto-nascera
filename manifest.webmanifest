@@ -1,0 +1,17 @@
+{
+  "name": "Que Fruto Nascerá Aqui?",
+  "short_name": "Que Fruto?",
+  "description": "Jogo educativo sobre flores, polinizadores e fruticultura.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#FFFBF2",
+  "theme_color": "#1B7A4B",
+  "lang": "pt-BR",
+  "categories": ["education", "games"],
+  "icons": [
+    { "src": "assets/icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/icone-mascara.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

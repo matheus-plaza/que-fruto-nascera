@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#1B7A4B">
+<meta name="description" content="Que fruto nascerá aqui? Um jogo sobre flores, polinizadores e fruticultura.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Que Fruto Nascerá?">
+<title>Que Fruto Nascerá Aqui?</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icone.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="folhas-fundo" aria-hidden="true"></div>
+
+<!-- ============ INICIO ============ -->
+<section class="tela ativa" id="tela-home">
+  <div class="home-wrap">
+    <div class="home-art" id="homeArt" aria-hidden="true"></div>
+    <p class="home-tag">Fruticultura &amp; Polinizadores</p>
+    <h1 class="home-titulo">Que Fruto<br><em>Nascerá Aqui?</em></h1>
+    <p class="home-sub">Antes de existir uma fruta, existiu uma flor.<br>Você consegue adivinhar qual?</p>
+    <div class="home-botoes">
+      <button class="btn btn-primario btn-grande" data-ir="modo">▶ Jogar agora</button>
+      <div class="home-linha">
+        <button class="btn btn-fantasma" data-ir="ajuda">Como jogar</button>
+        <button class="btn btn-fantasma" data-ir="ranking">🏅 Ranking</button>
+      </div>
+    </div>
+    <button class="btn-mini" id="btnPainel" title="Modo feira e ajustes">⚙️ Modo feira</button>
+  </div>
+</section>
+
+<!-- ============ ESCOLHA DE MODO ============ -->
+<section class="tela" id="tela-modo">
+  <header class="topo">
+    <button class="btn-voltar" data-ir="home">‹ Voltar</button>
+    <h2>Preparar rodada</h2>
+    <span class="espaco"></span>
+  </header>
+  <div class="conteudo">
+    <label class="campo">
+      <span>Seu nome <small>(opcional, aparece no ranking)</small></span>
+      <input id="inpNome" type="text" maxlength="16" placeholder="Ex: Ana" autocomplete="off" spellcheck="false">
+    </label>
+
+    <p class="rotulo">Escolha o tamanho da partida</p>
+    <div class="modos" id="listaModos"></div>
+
+    <div class="trilha-preview" id="trilhaPreview"></div>
+
+    <button class="btn btn-primario btn-grande largura-total" id="btnComecar">Começar 🌱</button>
+  </div>
+</section>
+
+<!-- ============ JOGO ============ -->
+<section class="tela" id="tela-jogo">
+  <header class="hud">
+    <button class="btn-voltar" id="btnSair" title="Sair da partida">✕</button>
+    <div class="hud-centro">
+      <span class="chip chip-nivel" id="chipNivel">Nível 1</span>
+      <span class="chip" id="chipRodada">1/10</span>
+    </div>
+    <div class="placar"><b id="placarValor">0</b><span>pts</span></div>
+  </header>
+
+  <div class="barra-progresso"><i id="barraProgresso"></i></div>
+
+  <div class="jogo-corpo">
+    <div class="palco" id="palco">
+      <div class="palco-caixa">
+        <div class="camada camada-flor" id="camadaFlor"></div>
+        <div class="camada camada-fruto" id="camadaFruto"></div>
+        <div class="mascara" id="mascara" aria-hidden="true"></div>
+        <div class="brilho" id="brilho" aria-hidden="true"></div>
+        <div class="cronometro" id="cronometro" hidden><svg viewBox="0 0 40 40"><circle class="c-fundo" cx="20" cy="20" r="17"/><circle class="c-frente" id="cronoArco" cx="20" cy="20" r="17"/></svg><span id="cronoNum">30</span></div>
+      </div>
+      <div class="selo-pontos" id="seloPontos" aria-live="polite"></div>
+    </div>
+
+    <div class="painel">
+      <h2 class="pergunta" id="pergunta">Que fruto nascerá desta flor?</h2>
+      <div class="alternativas" id="alternativas"></div>
+
+      <div class="pistas-area">
+        <button class="btn btn-pista" id="btnPista">
+          <span class="pista-icone">💡</span>
+          <span class="pista-txt">Pedir uma pista</span>
+          <span class="pista-cont" id="pistaCont">3</span>
+        </button>
+        <ul class="lista-pistas" id="listaPistas"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEEDBACK (painel deslizante) ============ -->
+<div class="folha-modal" id="folhaFeedback" hidden>
+  <div class="folha-conteudo">
+    <div class="fb-cabeca">
+      <div class="fb-emoji" id="fbEmoji">🎉</div>
+      <div>
+        <p class="fb-status" id="fbStatus">Acertou!</p>
+        <p class="fb-nome" id="fbNome">Maracujá</p>
+      </div>
+      <div class="fb-pontos" id="fbPontos">+30</div>
+    </div>
+    <div class="fb-bloco">
+      <h3>Da flor ao fruto</h3>
+      <p id="fbExplicacao"></p>
+    </div>
+    <div class="fb-bloco fb-curiosidade">
+      <h3>🐝 <span id="fbPolinizador"></span></h3>
+      <p id="fbCuriosidade"></p>
+    </div>
+    <p class="fb-credito" id="fbCredito"></p>
+    <button class="btn btn-primario btn-grande largura-total" id="btnContinuar">Continuar ›</button>
+  </div>
+</div>
+
+<!-- ============ INTRO DE NIVEL ============ -->
+<div class="intro-nivel" id="introNivel" hidden>
+  <div class="intro-caixa">
+    <div class="intro-icone" id="introIcone">🌸</div>
+    <p class="intro-lema" id="introLema">O coração do jogo</p>
+    <h2 id="introTitulo">Da Flor ao Fruto</h2>
+    <p id="introDesc"></p>
+    <div class="intro-barra"><i></i></div>
+  </div>
+</div>
+
+<!-- ============ FIM ============ -->
+<section class="tela" id="tela-fim">
+  <div class="conteudo fim-wrap">
+    <div class="medalha" id="medalha">🏆</div>
+    <p class="fim-tag">Resultado</p>
+    <h2 class="fim-titulo" id="fimTitulo">Mestre da Fruticultura</h2>
+    <p class="fim-msg" id="fimMsg"></p>
+
+    <div class="fim-placar">
+      <div><b id="fimPontos">0</b><span>pontos</span></div>
+      <div><b id="fimAcertos">0/10</b><span>acertos</span></div>
+      <div><b id="fimSemPista">0</b><span>sem pista</span></div>
+    </div>
+
+    <p class="rotulo">Seu pomar desta partida</p>
+    <div class="pomar" id="pomar"></div>
+
+    <div class="fim-frase">
+      Parabéns! Agora você sabe que, antes de existir uma fruta, houve uma flor —
+      e quase sempre a ajuda de um polinizador.
+    </div>
+
+    <div class="fim-botoes">
+      <button class="btn btn-primario btn-grande" id="btnDeNovo">Jogar de novo</button>
+      <button class="btn btn-fantasma" data-ir="ranking">Ver ranking</button>
+      <button class="btn btn-fantasma" data-ir="home">Início</button>
+    </div>
+    <p class="auto-voltar" id="autoVoltar" hidden></p>
+  </div>
+</section>
+
+<!-- ============ RANKING ============ -->
+<section class="tela" id="tela-ranking">
+  <header class="topo">
+    <button class="btn-voltar" data-ir="home">‹ Voltar</button>
+    <h2>🏅 Ranking</h2>
+    <span class="espaco"></span>
+  </header>
+  <div class="conteudo">
+    <ol class="ranking" id="listaRanking"></ol>
+    <p class="vazio" id="rankingVazio" hidden>Ninguém jogou ainda. Seja o primeiro!</p>
+    <button class="btn btn-fantasma largura-total" id="btnLimparRanking">Limpar ranking</button>
+  </div>
+</section>
+
+<!-- ============ AJUDA ============ -->
+<section class="tela" id="tela-ajuda">
+  <header class="topo">
+    <button class="btn-voltar" data-ir="home">‹ Voltar</button>
+    <h2>Como jogar</h2>
+    <span class="espaco"></span>
+  </header>
+  <div class="conteudo">
+    <div class="cartao">
+      <h3>🌸 A ideia</h3>
+      <p>Toda fruta começa como uma flor. O jogo mostra a flor (ou a fruta) e você descobre de quem ela é.</p>
+    </div>
+    <div class="cartao">
+      <h3>💡 As pistas</h3>
+      <p>Travou? Peça até <b>3 pistas</b> sobre a planta, a polinização e o fruto. Cada pista usada diminui os pontos daquela rodada — então tente adivinhar antes!</p>
+    </div>
+    <div class="cartao">
+      <h3>🏆 Pontuação</h3>
+      <table class="tabela">
+        <tr><td>Acertou só olhando</td><td><b>até 30 pts</b></td></tr>
+        <tr><td>Depois da 1ª pista</td><td>20 pts</td></tr>
+        <tr><td>Depois da 2ª pista</td><td>10 pts</td></tr>
+        <tr><td>Depois da 3ª pista</td><td>5 pts</td></tr>
+        <tr><td>Errou</td><td>0 pts</td></tr>
+      </table>
+      <p class="nota">Acertos seguidos dão bônus de sequência. No nível 3 vale mais, e no desafio final os pontos caem enquanto a flor é revelada.</p>
+    </div>
+    <div class="cartao">
+      <h3>🌳 Os níveis</h3>
+      <ul class="lista-niveis" id="listaNiveisAjuda"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAINEL / MODO FEIRA ============ -->
+<section class="tela" id="tela-painel">
+  <header class="topo">
+    <button class="btn-voltar" data-ir="home">‹ Voltar</button>
+    <h2>⚙️ Modo feira</h2>
+    <span class="espaco"></span>
+  </header>
+  <div class="conteudo">
+    <div class="cartao">
+      <h3>Ajustes</h3>
+      <label class="chave"><span>🔊 Sons do jogo</span><input type="checkbox" id="cfgSom" checked><i></i></label>
+      <label class="chave"><span>📳 Vibração</span><input type="checkbox" id="cfgVibra" checked><i></i></label>
+      <label class="chave"><span>⏱️ Cronômetro nas rodadas</span><input type="checkbox" id="cfgTempo"><i></i></label>
+      <label class="chave"><span>🎪 Voltar sozinho ao início</span><input type="checkbox" id="cfgAuto"><i></i></label>
+      <p class="nota">Com o retorno automático ligado, a tela final volta para o início depois de 45 s — ideal para um tablet solto na feira.</p>
+    </div>
+    <div class="cartao">
+      <h3>📲 Levar para o tablet</h3>
+      <p>Abra este endereço no tablet e use <b>“Adicionar à tela de início”</b>. O jogo instala como aplicativo e funciona <b>sem internet</b>.</p>
+      <div class="url-caixa"><code id="urlAtual"></code></div>
+      <button class="btn btn-fantasma largura-total" id="btnCopiarUrl">Copiar endereço</button>
+      <p class="nota">Para o QR Code da feira: gere um QR com esse mesmo endereço e imprima na placa da barraca.</p>
+    </div>
+    <div class="cartao">
+      <h3>📥 Guardar para usar sem internet</h3>
+      <p>O jogo tem <b id="qtdFotos">–</b> fotos. Toque abaixo uma vez, com internet, para o tablet
+         guardar tudo. Depois ele funciona até no modo avião.</p>
+      <button class="btn btn-fantasma largura-total" id="btnBaixarTudo">Guardar fotos no tablet</button>
+      <div class="barra-progresso barra-baixa" id="barraBaixa" hidden><i></i></div>
+      <p class="nota" id="statusBaixa"></p>
+    </div>
+    <div class="cartao">
+      <h3>📷 Fotos e créditos</h3>
+      <p>Todas as fotos vêm do Wikimedia Commons, com licença livre. A tela de créditos lista
+         o autor e a licença de cada uma — bom deixar aberta na barraca.</p>
+      <button class="btn btn-fantasma largura-total" data-ir="creditos">Ver créditos das fotos</button>
+    </div>
+    <div class="cartao">
+      <h3>🌿 Frutas do jogo</h3>
+      <p class="nota" id="contagemEspecies"></p>
+      <div class="galeria" id="galeriaEspecies"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CREDITOS ============ -->
+<section class="tela" id="tela-creditos">
+  <header class="topo">
+    <button class="btn-voltar" data-ir="painel">‹ Voltar</button>
+    <h2>📷 Créditos</h2>
+    <span class="espaco"></span>
+  </header>
+  <div class="conteudo">
+    <div class="cartao">
+      <h3>De onde vêm as fotos</h3>
+      <p>Todas as fotografias deste jogo foram publicadas no <b>Wikimedia Commons</b> sob licenças
+         livres (Creative Commons ou domínio público), que permitem uso e compartilhamento desde que
+         o autor seja creditado. A lista completa está abaixo.</p>
+      <p class="nota">Boa parte delas é do acervo botânico de Forest &amp; Kim Starr, que fotografa
+         plantas cultivadas identificando espécie e parte da planta.</p>
+    </div>
+    <ul class="lista-creditos" id="listaCreditos"></ul>
+  </div>
+</section>
+
+<div class="confete" id="confete" aria-hidden="true"></div>
+
+<script src="js/art.js"></script>
+<script src="js/creditos.js"></script>
+<script src="js/midia.js"></script>
+<script src="js/data.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

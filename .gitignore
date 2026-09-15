@@ -1,0 +1,15 @@
+# temporarios das ferramentas de foto
+tools/__pycache__/
+tools/_cand/
+tools/_revisao-*.jpg
+tools/_fix-*.jpg
+tools/_final-*.jpg
+
+# sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# editor
+.vscode/
+.idea/

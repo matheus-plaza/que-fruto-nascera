@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo de espécies — Que Fruto Nascerá Aqui?</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;padding:28px;font-family:'Nunito',system-ui,sans-serif;color:#26332C;
+       background:linear-gradient(180deg,#F3FAF3,#FFFBF2)}
+  h1{font-family:'Baloo 2',sans-serif;color:#0F5233;margin:0 0 4px;font-size:2rem}
+  .sub{color:#5B6B61;font-weight:700;margin:0 0 24px}
+  .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+  .card{background:#fff;border-radius:24px;padding:16px 18px;box-shadow:0 10px 30px rgba(24,60,40,.10)}
+  .par{display:flex;align-items:center;gap:6px}
+  .par figure{margin:0;flex:1;text-align:center}
+  .par svg{width:100%;height:auto;display:block}
+  .par img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;display:block}
+  .par .art-vazia{aspect-ratio:1;display:grid;place-items:center;font-size:2rem;opacity:.3;background:#EEF4EA;border-radius:14px}
+  .cred{margin:6px 0 0;font-size:.68rem;color:#8A968E;font-weight:700;line-height:1.3}
+  .par figcaption{font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#5B6B61}
+  .seta{font-size:1.5rem;color:#E9A93C;font-weight:900}
+  h2{font-family:'Baloo 2',sans-serif;margin:6px 0 2px;color:#1B7A4B;font-size:1.4rem}
+  .planta{font-size:.82rem;color:#5B6B61;font-weight:700;margin:0 0 8px}
+  ol{margin:0;padding-left:20px}
+  ol li{font-size:.88rem;line-height:1.45;margin-bottom:4px}
+  ol li b{color:#8A5B12;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+  .pol{margin:10px 0 0;font-size:.85rem;background:#EFF9F1;border-radius:12px;padding:8px 10px;font-weight:700;color:#12603A}
+  .cur{margin:8px 0 0;font-size:.85rem;line-height:1.45;color:#3D4A42}
+  @media print{body{background:#fff}.card{break-inside:avoid;box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<h1>Catálogo de espécies</h1>
+<p class="sub">Todas as flores, frutos, pistas e curiosidades do jogo — para conferir a arte e preparar a apresentação da barraca. Dá para imprimir.</p>
+<div class="grade" id="grade"></div>
+
+<script src="js/art.js"></script>
+<script src="js/creditos.js"></script>
+<script src="js/midia.js"></script>
+<script src="js/data.js"></script>
+<script>
+function creditoDe(e) {
+  var out = [];
+  ['flor', 'fruto'].forEach(function (t) {
+    var c = Midia.credito(e.id, t);
+    if (c) out.push('Foto ' + t + ': ' + c.autor + ' (' + c.licenca + ')');
+  });
+  return out.join(' · ') + (out.length ? ' — Wikimedia Commons' : '');
+}
+
+document.getElementById('grade').innerHTML = DB.especies.map(function (e) {
+  return '<div class="card">' +
+    '<div class="par">' +
+      '<figure>' + Midia.mini(e.id, 'flor') + '<figcaption>' +
+        (e.soFruto ? 'não tem flor visível' : 'flor') + '</figcaption></figure>' +
+      '<div class="seta">→</div>' +
+      '<figure>' + Midia.mini(e.id, 'fruto') + '<figcaption>fruto</figcaption></figure>' +
+    '</div>' +
+    '<h2>' + e.emoji + ' ' + e.nome + '</h2>' +
+    '<p class="planta">' + e.planta + '</p>' +
+    '<ol>' + e.pistas.map(function (p) { return '<li><b>' + p.t + '</b><br>' + p.d + '</li>'; }).join('') + '</ol>' +
+    '<p class="pol">🐝 ' + e.polinizador + '</p>' +
+    '<p class="cur">' + e.curiosidade + '</p>' +
+    '<p class="cred">' + creditoDe(e) + '</p>' +
+  '</div>';
+}).join('');
+</script>
+</body>
+</html>
