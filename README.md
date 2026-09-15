@@ -6,6 +6,8 @@ Roda no navegador do tablet, **instala como aplicativo** e **funciona sem intern
 
 ---
 
+> **Para colocar no ar:** o passo a passo completo (grátis, com publicação automática a cada alteração) está em **[DEPLOY.md](DEPLOY.md)**.
+
 ## Como abrir agora, no PC
 
 Dois cliques em **`index.html`**. Não precisa instalar nada, nem servidor, nem internet.
@@ -20,17 +22,9 @@ Atalhos só para testar rápido: teclas `1`–`4` respondem, `P` pede pista, `En
 
 ### Opção 1 — Hospedar de graça (é o que permite o QR Code)
 
-**GitHub Pages** (grátis, sem cartão):
+Use o **Cloudflare Pages**, que além de grátis republica sozinho toda vez que você alterar alguma coisa. O passo a passo está em **[DEPLOY.md](DEPLOY.md)** — são uns 10 minutos, feitos uma vez só.
 
-1. Crie uma conta em [github.com](https://github.com).
-2. Crie um repositório novo, público, chamado por exemplo `que-fruto`.
-3. Envie **todos os arquivos desta pasta** (*Add file → Upload files*; arraste a pasta inteira, inclusive `assets/`).
-4. Vá em **Settings → Pages**, em *Branch* escolha `main` / `/ (root)` e salve.
-5. Em 1–2 minutos o jogo estará em `https://SEU-USUARIO.github.io/que-fruto/`.
-
-Alternativas igualmente grátis: **Netlify Drop** ([app.netlify.com/drop](https://app.netlify.com/drop) — arrasta a pasta, sem precisar de conta) ou **Vercel**.
-
-Com o endereço em mãos, gere o **QR Code** em qualquer gerador gratuito (`qr.io`, `qrcode-monkey.com`) e imprima na placa da barraca. Dentro do jogo, em **⚙️ Modo feira**, o endereço aparece grande e tem botão de copiar.
+No fim você recebe um endereço como `https://que-fruto-nascera.pages.dev`. Gere o **QR Code** dele em qualquer gerador gratuito (`qr.io`, `qrcode-monkey.com`) e imprima na placa da barraca. Dentro do jogo, em **⚙️ Modo feira**, o endereço aparece grande e tem botão de copiar.
 
 ### Opção 2 — Instalar como aplicativo no tablet (sem loja, sem APK)
 
@@ -143,7 +137,7 @@ As **pistas** não usam nenhum termo técnico — são observações concretas, 
 ## Detalhes técnicos
 
 - HTML, CSS e JavaScript puros. **Nenhuma dependência**, nenhum passo de build, nenhum `npm install`.
-- PWA: `manifest.webmanifest` + `sw.js`. O service worker guarda o jogo (HTML/CSS/JS) na instalação e as fotos conforme aparecem; o botão do Modo feira força todas de uma vez. Ele só é registrado no site publicado, não em `localhost`.
+- PWA: `manifest.webmanifest` + `sw.js`. O service worker busca o jogo (HTML/CSS/JS) **na rede primeiro**, usando a cópia guardada só quando está offline — então todo deploy novo entra no ar sozinho, sem ninguém precisar mexer em número de versão. As fotos são o contrário (**cache primeiro**), porque nunca mudam de conteúdo. Ele só é registrado no site publicado, não em `localhost`.
 - `js/art.js` desenha flores e frutos em SVG por código. Hoje isso é a **reserva**: se uma foto faltar, entra a ilustração, e o jogo nunca mostra imagem quebrada. A logo da tela inicial também vem daí.
 
 ### Arquivos
@@ -180,4 +174,4 @@ Para trocar uma pista, um texto ou acrescentar uma fruta, o arquivo é **`js/dat
 
 Fruta nova também precisa das duas fotos em `assets/fotos/` (`<id>-flor.jpg` e `<id>-fruto.jpg`) — o jeito mais fácil é adicionar a linha dela em `tools/baixar_fotos.py` e rodar o script. Se ela não tiver flor visível, marque `soFruto: true` como no figo.
 
-Mudou algum arquivo depois de publicar? Aumente o número em `var CACHE = 'que-fruto-v3'` (arquivo `sw.js`) para os tablets já instalados baixarem a versão nova.
+Mudou algum arquivo depois de publicar? Só publicar: veja **[DEPLOY.md](DEPLOY.md)**. Os tablets já instalados pegam a versão nova sozinhos na próxima vez que abrirem com internet — não precisa mexer em nada no código.
